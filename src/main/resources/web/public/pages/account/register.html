@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<!--suppress HtmlUnknownTarget -->
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<!--Meta stuffs-->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="aFileHost // POMF inspired file host">
+		<meta property="og:title" content="aFileHost"/>
+		<meta property="og:url" content="https://www.afilehost.com"/>
+		<meta property="og:description" content="aFileHost // POMF inspired file host"/>
+		<!--meta property="og:image" content="I WILL PUT THE LOGO IN WHEN I MAKE IT SMALL"/-->
+		<title>Register // aFileHost</title>
+
+		<!--Locally Hosted Files-->
+		<link rel="stylesheet" href="/styles/global.css">
+		<link rel="stylesheet" href="/styles/fix.css">
+		<script src="/scripts/snackbar.js"></script>
+		<script src="/scripts/account/register.js"></script>
+
+		<!--Externally hosted-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	</head>
+
+	<body>
+		<div class="top-nav">
+			<a href="/">Home</a>
+			<a href="/contact">Contact</a>
+			<a href="https://www.patreon.com/Novafox">Patreon</a>
+
+			<a class="account" th:if="${loggedIn}" href="/account/logout">Log out</a>
+			<a class="account" th:unless="${loggedIn}" href="/account/register">Register</a>
+			<a class="account" th:unless="${loggedIn}" href="/account/login">Log In</a>
+		</div>
+
+		<div id="content">
+			<div th:if="${loggedIn}">
+				<h1>You are already logged in. why are you even here?</h1>
+			</div>
+			<div th:unless="${loggedIn}">
+				<h1>Register</h1>
+				<form id="register" action="javascript:onSubmit()">
+					<label>Email
+						<br>
+						<input type="email" id="email" required>
+					</label>
+					<br>
+					<br>
+					<label>Username
+						<br>
+						<input type="text" maxlength="64" id="username" required>
+					</label>
+					<br>
+					<br>
+					<label>Password (Min. 8 characters)
+						<br>
+						<input type="password" minlength="8" id="password" required>
+					</label>
+					<br>
+					<br>
+					<label>Confirm Password
+						<br>
+						<input type="password" minlength="8" id="password-confirm" oninput="checkValidity(this)"
+						       required>
+					</label>
+					<br>
+					<br>
+					<div class="g-recaptcha" data-sitekey="6Lea-lQUAAAAAJ6baxR5Gz8hlcbJyfZPhVvAO9cR"></div>
+					<br>
+					<br>
+					<input class="submit" type="submit" value="Register Account">
+				</form>
+				<br>
+				<br>
+				<h3><span>Already have an account? </span><a href="/account/login">Login</a></h3>
+			</div>
+		</div>
+
+		<div id="snackbar"></div>
+	</body>
+
+	<footer id="footer">
+		<p><span th:text="'© Nova Maday ' + ${year} + '. All rights reserved.'"></span><span> | </span><a
+				href="/policy/privacy">Privacy Policy</a></p>
+	</footer>
+</html>

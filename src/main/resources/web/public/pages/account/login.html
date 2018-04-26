@@ -10,15 +10,22 @@
 		<meta property="og:url" content="https://www.afilehost.com"/>
 		<meta property="og:description" content="aFileHost // POMF inspired file host"/>
 		<!--meta property="og:image" content="I WILL PUT THE LOGO IN WHEN I MAKE IT SMALL"/-->
-		<title>Home // aFileHost</title>
+		<title>Login // aFileHost</title>
 
 		<!--Locally Hosted Files-->
 		<link rel="stylesheet" href="/styles/global.css">
+		<link rel="stylesheet" href="/styles/fix.css">
+		<script src="/scripts/snackbar.js"></script>
+		<script src="/scripts/account/login.js"></script>
+
+		<!--Externally hosted-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src='https://www.google.com/recaptcha/api.js'></script>
 	</head>
 
 	<body>
 		<div class="top-nav">
-			<a class="active" href="/">Home</a>
+			<a href="/">Home</a>
 			<a href="/contact">Contact</a>
 			<a href="https://www.patreon.com/Novafox">Patreon</a>
 
@@ -28,8 +35,36 @@
 		</div>
 
 		<div id="content">
-
+			<div th:if="${loggedIn}">
+				<h1>You are already logged in. why are you even here?</h1>
+			</div>
+			<div th:unless="${loggedIn}">
+				<h1>Login</h1>
+				<form id="login" action="javascript:onSubmit()">
+					<label>Email
+						<br>
+						<input type="email" id="email" required>
+					</label>
+					<br>
+					<br>
+					<label>Password
+						<br>
+						<input type="password" minlength="8" id="password" required>
+					</label>
+					<br>
+					<br>
+					<div class="g-recaptcha" data-sitekey="6Lea-lQUAAAAAJ6baxR5Gz8hlcbJyfZPhVvAO9cR"></div>
+					<br>
+					<br>
+					<input class="submit" type="submit" value="Login">
+				</form>
+				<br>
+				<br>
+				<h3><span>Don't have an account? </span><a href="/account/register">Register</a></h3>
+			</div>
 		</div>
+
+		<div id="snackbar"></div>
 	</body>
 
 	<footer id="footer">

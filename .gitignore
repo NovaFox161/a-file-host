@@ -126,3 +126,4 @@ local.properties
 hs_err_pid*
 /AFileHost.iml
 /.idea/
+*/META-INF/*
