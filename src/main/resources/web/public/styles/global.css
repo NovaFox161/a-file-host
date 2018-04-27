@@ -1,14 +1,13 @@
 /* The basics TODO: change styles to reflect new design */
 html {
     position: relative;
-    min-height: 100%;
+    height: 100%;
     overflow: auto;
 }
 
 body {
     /*noinspection CssUnknownTarget*/
-    background: url("/assets/images/background.jpg") no-repeat fixed center;
-    background-size: cover;
+    background: linear-gradient(to bottom right, #22a8e2 0%, #22e24b 100%) no-repeat fixed;
 
     min-height: 100%;
     margin: 0 0 25px; /* bottom = footer height */
@@ -24,7 +23,7 @@ footer {
 
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
-    color: #DE1A1A;
+    color: #AF0923;
 }
 
 h1 {
@@ -49,7 +48,7 @@ p {
 
 button {
     font-size: 18px;
-    background-color: #DE1A1A;
+    background-color: #AF0923;
     color: white;
     padding: 10px;
     border: 2px black;
@@ -79,8 +78,8 @@ button.danger:hover {
 }
 
 hr {
-    color: #DE1A1A;
-    background-color: #DE1A1A;
+    color: #AF0923;
+    background-color: #AF0923;
     border-color: transparent;
 
     height: 1px;
@@ -125,7 +124,7 @@ hr {
 /* Navigation bar */
 .top-nav {
     overflow: hidden;
-    background-color: #DE1A1A;
+    background-color: #AF0923;
 }
 
 .top-nav a {
