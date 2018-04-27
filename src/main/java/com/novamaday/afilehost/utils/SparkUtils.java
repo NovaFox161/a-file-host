@@ -2,6 +2,7 @@ package com.novamaday.afilehost.utils;
 
 import com.novamaday.afilehost.account.AccountHandler;
 import com.novamaday.afilehost.api.v1.AccountEndpoint;
+import com.novamaday.afilehost.api.v1.ContactEndpoint;
 import com.novamaday.afilehost.database.DatabaseManager;
 import com.novamaday.afilehost.logger.Logger;
 import com.novamaday.afilehost.objects.ApiKey;
@@ -42,6 +43,8 @@ public class SparkUtils {
                         Logger.getLogger().api("User registering account.", request.ip());
                     } else if (key.equals("LOGIN_ACCOUNT") && request.pathInfo().equals("/api/v1/account/login")) {
                         Logger.getLogger().api("user logging into account.", request.ip());
+                    } else if (key.equals("CONTACT") && request.pathInfo().equals("/api/v1/contact")) {
+                        Logger.getLogger().api("User sending contact email", request.ip());
                     } else {
                         ApiKey acc = DatabaseManager.getManager().getApiKey(key);
                         if (acc != null) {
@@ -67,6 +70,8 @@ public class SparkUtils {
         //API endpoints
         path("/api/v1", () -> {
             before("/*", (q, a) -> System.out.println("Received API call from: " + q.ip() + "; Host:" + q.host()));
+            post("/contact", ContactEndpoint::handle);
+
             path("/account", () -> {
                 post("/register", AccountEndpoint::register);
                 post("/login", AccountEndpoint::login);

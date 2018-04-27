@@ -38,6 +38,17 @@ public class EmailHandler {
         mailer.sendMail(email);
     }
 
+    public void sendContactEmail(String subject, String message, String name, String emailFrom) {
+        Email email = EmailBuilder.startingBlank()
+                .from(name, emailFrom)
+                .to(SiteSettings.EMAIL_USER.get())
+                .withSubject(subject)
+                .withPlainText(message)
+                .buildEmail();
+
+        mailer.sendMail(email);
+    }
+
     private String getConfirmEmail(String emailTo, String confirmationLink) {
         //TODO: CHANGE THIS TO OUR STYLES AND NAMES!!
         return "<h1 style=\"text-align: center; color: #de1a1a;\">Confirm Your Email</h1>\n" +

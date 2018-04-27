@@ -14,6 +14,13 @@
 
 		<!--Locally Hosted Files-->
 		<link rel="stylesheet" href="/styles/global.css">
+		<link rel="stylesheet" href="/styles/fix.css">
+		<script src="/scripts/snackbar.js"></script>
+		<script src="/scripts/contact.js"></script>
+
+		<!--Externally hosted-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src='https://www.google.com/recaptcha/api.js'></script>
 	</head>
 
 	<body>
@@ -29,10 +36,37 @@
 
 		<div id="content">
 			<h1>Contact Us</h1>
-			<p>This form is not active! I am working on coding it! Sorry!</p>
-
 			<div id="contact-form">
-
+				<form id="contact" action="javascript:onSubmit()">
+					<label>Subject
+						<br>
+						<input type="text" id="subject" required>
+					</label>
+					<br>
+					<br>
+					<label>Message
+						<br>
+						<input type="text" id="message" required>
+					</label>
+					<br>
+					<br>
+					<label>Name
+						<br>
+						<input type="text" id="name" required>
+					</label>
+					<br>
+					<br>
+					<label>Your Email
+						<br>
+						<input type="email" id="email" required>
+					</label>
+					<br>
+					<br>
+					<div class="g-recaptcha" data-sitekey="6LdP71UUAAAAABXuslaxt0A4heURmjhjLQOjSL69"></div>
+					<br>
+					<br>
+					<input class="submit" type="submit" value="Submit">
+				</form>
 			</div>
 		</div>
 	</body>
