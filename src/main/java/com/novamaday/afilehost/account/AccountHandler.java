@@ -48,7 +48,7 @@ public class AccountHandler {
     }
 
     //Getters
-    public Map getAccount(String sessionId) {
+    public Map<String, Object> getAccount(String sessionId) {
         if (accounts.containsKey(sessionId)) {
             Map m = accounts.get(sessionId);
             m.remove("lastUse");

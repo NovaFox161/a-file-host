@@ -29,7 +29,7 @@ public class EmailHandler {
 
     public void sendEmailConfirm(String emailTo, String confirmationLink) {
         Email email = EmailBuilder.startingBlank()
-                .from("Do Not Reply | Nova Maday", "do-not-reply@novamaday.com")
+                .from("Do Not Reply | aFileHost", "do-not-reply@afilehost.com")
                 .to(emailTo)
                 .withSubject("Confirm Your Email")
                 .withHTMLText(getConfirmEmail(emailTo, confirmationLink))

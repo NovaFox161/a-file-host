@@ -122,4 +122,55 @@ public class AccountEndpoint {
         }
         return response.body();
     }
+
+    public static String changeUsername(Request request, Response response) {
+        JSONObject body = new JSONObject(request.body());
+        if (body.has("username")) {
+            Map<String, Object> map = AccountHandler.getHandler().getAccount(request.session().id());
+            User user = (User) map.get("account");
+
+            if (!DatabaseManager.getManager().usernameTaken(body.getString("username"))) {
+                user.setUsername(body.getString("username"));
+
+                DatabaseManager.getManager().updateUser(user);
+
+                response.status(200);
+                response.body("Username successfully changed!");
+            } else {
+                response.status(400);
+                response.body("Username already taken!");
+            }
+        } else {
+            response.status(400);
+            response.body("Invalid Request");
+        }
+        return response.body();
+    }
+
+    public static String changeEmail(Request request, Response response) {
+        JSONObject body = new JSONObject(request.body());
+        if (body.has("email")) {
+            Map<String, Object> map = AccountHandler.getHandler().getAccount(request.session().id());
+            User user = (User) map.get("account");
+
+            if (!DatabaseManager.getManager().emailTaken(body.getString("email"))) {
+                user.setEmail(body.getString("email"));
+                user.setEmailConfirmed(false);
+
+                DatabaseManager.getManager().updateUser(user);
+
+                EmailHandler.getHandler().sendEmailConfirm(user.getEmail(), Generator.generateEmailConfirmationLink(user));
+
+                response.status(200);
+                response.body("Email successfully changed! Please reconfirm your email!");
+            } else {
+                response.status(400);
+                response.body("That email is in use!");
+            }
+        } else {
+            response.status(400);
+            response.body("Invalid Request");
+        }
+        return response.body();
+    }
 }

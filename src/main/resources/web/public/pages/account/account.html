@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="/styles/global.css">
 		<link rel="stylesheet" href="/styles/fix.css">
 		<script src="/scripts/snackbar.js"></script>
+		<script src="/scripts/account/account.js"></script>
 
 		<!--Externally hosted-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -35,9 +36,43 @@
 		<div id="content">
 			<div th:if="${loggedIn}">
 				<h1>My Account</h1>
-				<p>
-					More will be here, I just built this.
-				</p>
+
+				<form id="change-username-form" action="javascript:changeUsername()">
+					<label>Username
+						<br>
+						<input type="text" th:value="${account.username}">
+					</label>
+					<input id="username" class="submit" type="submit" value="Change" required>
+				</form>
+
+				<br>
+				<br>
+
+				<form id="change-email-form" action="javascript:changeEmail()">
+					<label>Email
+						<br>
+						<input id="email" type="email" th:value="${account.email}" required>
+					</label>
+					<input class="submit" type="submit" value="Change">
+				</form>
+
+				<!--TODO: Change password form...-->
+
+				<br>
+				<hr>
+				<br>
+
+				<div id="uploads">
+					<h2>Uploads</h2>
+				</div>
+
+				<br>
+				<hr>
+				<br>
+
+				<div id="keys">
+					<h2>API Keys</h2>
+				</div>
 			</div>
 			<div th:unless="${loggedIn}">
 				<h1>Please login to continue</h1>

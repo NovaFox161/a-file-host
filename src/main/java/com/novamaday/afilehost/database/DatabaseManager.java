@@ -259,6 +259,56 @@ public class DatabaseManager {
         return false;
     }
 
+    public boolean usernameTaken(String username) {
+        try {
+            if (databaseInfo.getMySQL().checkConnection()) {
+                String tableName = String.format("%saccounts", databaseInfo.getPrefix());
+
+                String query = "SELECT * FROM " + tableName + " WHERE username = ?";
+                PreparedStatement statement = databaseInfo.getConnection().prepareStatement(query);
+                statement.setString(1, username);
+
+                ResultSet res = statement.executeQuery();
+
+                Boolean hasStuff = res.next();
+
+                if (hasStuff) {
+                    statement.close();
+                    return true;
+                }
+                statement.close();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger().exception("Failed to verify username taken", e, this.getClass());
+        }
+        return false;
+    }
+
+    public boolean emailTaken(String email) {
+        try {
+            if (databaseInfo.getMySQL().checkConnection()) {
+                String tableName = String.format("%saccounts", databaseInfo.getPrefix());
+
+                String query = "SELECT * FROM " + tableName + " WHERE email = ?";
+                PreparedStatement statement = databaseInfo.getConnection().prepareStatement(query);
+                statement.setString(1, email);
+
+                ResultSet res = statement.executeQuery();
+
+                Boolean hasStuff = res.next();
+
+                if (hasStuff) {
+                    statement.close();
+                    return true;
+                }
+                statement.close();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger().exception("Failed to verify email taken", e, this.getClass());
+        }
+        return false;
+    }
+
     public boolean updateUser(User user) {
         try {
             if (databaseInfo.getMySQL().checkConnection()) {
