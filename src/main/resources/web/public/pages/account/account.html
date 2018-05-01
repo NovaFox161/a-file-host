@@ -15,11 +15,13 @@
 		<!--Locally Hosted Files-->
 		<link rel="stylesheet" href="/styles/global.css">
 		<link rel="stylesheet" href="/styles/fix.css">
+		<link href="/styles/bootstrap/modal-only.css" rel="stylesheet">
 		<script src="/scripts/snackbar.js"></script>
 		<script src="/scripts/account/account.js"></script>
 
 		<!--Externally hosted-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 
 	<body>
@@ -36,26 +38,81 @@
 		<div id="content">
 			<div th:if="${loggedIn}">
 				<h1>My Account</h1>
+				<button type="button" data-toggle="modal" data-target="#modal-change-username"
+				        style="float: right">Change Username
+				</button>
+				<button type="button" data-toggle="modal" data-target="#modal-change-email"
+				        style="float: right">Change Email
+				</button>
 
-				<form id="change-username-form" action="javascript:changeUsername()">
-					<label>Username
-						<br>
-						<input type="text" th:value="${account.username}">
-					</label>
-					<input id="username" class="submit" type="submit" value="Change" required>
-				</form>
+				<!-- Change username Modal -->
+				<div class="modal fade" id="modal-change-username" role="dialog">
+					<div class="modal-dialog">
 
-				<br>
-				<br>
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Change Username</h4>
+							</div>
+							<div class="modal-body">
+								<form style="text-align: left;" action="javascript:changeUsername()">
+									<label>Username
+										<br>
+										<input type="text" id="change-username-username" required
+										       th:value="account.username">
+									</label>
+									<br>
+									<br>
+									<label>Password
+										<br>
+										<input type="password" id="change-username-password" required>
+									</label>
+									<br>
+									<br>
 
-				<form id="change-email-form" action="javascript:changeEmail()">
-					<label>Email
-						<br>
-						<input id="email" type="email" th:value="${account.email}" required>
-					</label>
-					<input class="submit" type="submit" value="Change">
-				</form>
+									<input type="submit" class="submit" value="Change Username">
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Change username Modal -->
+				<div class="modal fade" id="modal-change-email" role="dialog">
+					<div class="modal-dialog">
 
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Change Email</h4>
+							</div>
+							<div class="modal-body">
+								<form style="text-align: left;" action="javascript:changeEmail()">
+									<label>Email
+										<br>
+										<input type="email" id="change-email-email" required
+										       th:value="account.email">
+									</label>
+									<br>
+									<br>
+									<label>Password
+										<br>
+										<input type="password" id="change-email-password" required>
+									</label>
+									<br>
+									<br>
+
+									<input type="submit" class="submit" value="Change Email">
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
 				<!--TODO: Change password form...-->
 
 				<br>
@@ -74,9 +131,9 @@
 					<h2>API Keys</h2>
 				</div>
 			</div>
-			<div th:unless="${loggedIn}">
-				<h1>Please login to continue</h1>
-			</div>
+		</div>
+		<div th:unless="${loggedIn}">
+			<h1>Please login to continue</h1>
 		</div>
 
 		<div id="snackbar"></div>

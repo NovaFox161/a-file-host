@@ -125,20 +125,26 @@ public class AccountEndpoint {
 
     public static String changeUsername(Request request, Response response) {
         JSONObject body = new JSONObject(request.body());
-        if (body.has("username")) {
+        if (body.has("username") && body.has("password")) {
             Map<String, Object> map = AccountHandler.getHandler().getAccount(request.session().id());
             User user = (User) map.get("account");
 
-            if (!DatabaseManager.getManager().usernameTaken(body.getString("username"))) {
-                user.setUsername(body.getString("username"));
+            if (DatabaseManager.getManager().validLogin(user.getEmail(), body.getString("password"))) {
 
-                DatabaseManager.getManager().updateUser(user);
+                if (!DatabaseManager.getManager().usernameTaken(body.getString("username"))) {
+                    user.setUsername(body.getString("username"));
 
-                response.status(200);
-                response.body("Username successfully changed!");
+                    DatabaseManager.getManager().updateUser(user);
+
+                    response.status(200);
+                    response.body("Username successfully changed!");
+                } else {
+                    response.status(400);
+                    response.body("Username already taken!");
+                }
             } else {
                 response.status(400);
-                response.body("Username already taken!");
+                response.body("Invalid Password");
             }
         } else {
             response.status(400);
@@ -149,23 +155,28 @@ public class AccountEndpoint {
 
     public static String changeEmail(Request request, Response response) {
         JSONObject body = new JSONObject(request.body());
-        if (body.has("email")) {
+        if (body.has("email") && body.has("password")) {
             Map<String, Object> map = AccountHandler.getHandler().getAccount(request.session().id());
             User user = (User) map.get("account");
 
-            if (!DatabaseManager.getManager().emailTaken(body.getString("email"))) {
-                user.setEmail(body.getString("email"));
-                user.setEmailConfirmed(false);
+            if (DatabaseManager.getManager().validLogin(user.getEmail(), body.getString("password"))) {
+                if (!DatabaseManager.getManager().emailTaken(body.getString("email"))) {
+                    user.setEmail(body.getString("email"));
+                    user.setEmailConfirmed(false);
 
-                DatabaseManager.getManager().updateUser(user);
+                    DatabaseManager.getManager().updateUser(user);
 
-                EmailHandler.getHandler().sendEmailConfirm(user.getEmail(), Generator.generateEmailConfirmationLink(user));
+                    EmailHandler.getHandler().sendEmailConfirm(user.getEmail(), Generator.generateEmailConfirmationLink(user));
 
-                response.status(200);
-                response.body("Email successfully changed! Please reconfirm your email!");
+                    response.status(200);
+                    response.body("Email successfully changed! Please reconfirm your email!");
+                } else {
+                    response.status(400);
+                    response.body("That email is in use!");
+                }
             } else {
                 response.status(400);
-                response.body("That email is in use!");
+                response.body("Invalid Password");
             }
         } else {
             response.status(400);

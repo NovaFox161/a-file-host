@@ -1,6 +1,7 @@
 function changeUsername() {
     var bodyRaw = {
-        "username": document.getElementById("username").value
+        "username": document.getElementById("change-username-username").value,
+        "password": document.getElementById("change-username-password").value
     };
 
     $.ajax({
@@ -13,6 +14,8 @@ function changeUsername() {
         data: JSON.stringify(bodyRaw),
         success: function (jqXHR) {
             showSnackbar(jqXHR.responseText);
+            document.getElementById("change-username-password").value = "";
+            $('#modal-change-username').modal('hide');
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showSnackbar(jqXHR.responseText);
@@ -22,7 +25,8 @@ function changeUsername() {
 
 function changeEmail() {
     var bodyRaw = {
-        "email": document.getElementById("email").value
+        "email": document.getElementById("change-email-email").value,
+        "password": document.getElementById("change-email-password").value
     };
 
     $.ajax({
@@ -35,6 +39,8 @@ function changeEmail() {
         data: JSON.stringify(bodyRaw),
         success: function (jqXHR) {
             showSnackbar(jqXHR.responseText);
+            document.getElementById("change-email-password").value = "";
+            $('#modal-change-email').modal('hide');
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showSnackbar(jqXHR.responseText);
