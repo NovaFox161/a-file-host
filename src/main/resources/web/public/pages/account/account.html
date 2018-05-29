@@ -113,7 +113,47 @@
 						</div>
 					</div>
 				</div>
-				<!--TODO: Change password form...-->
+				<!-- Change password form -->
+				<div class="modal fade" id="modal-change-password" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Change Password</h4>
+							</div>
+							<div class="modal-body">
+								<form style="text-align: left;" action="javascript:changePassword()">
+									<label>Current Password
+										<br>
+										<input type="password" id="change-password-old-password" required>
+									</label>
+									<br>
+									<br>
+									<label>New Password
+										<br>
+										<input type="password" id="change-password-new-password" required
+										       onchange="validatePassword()" onkeyup="validatePassword()" minlength="8">
+									</label>
+									<br>
+									<br>
+									<label>Confirm Password
+										<br>
+										<input type="password" id="change-password-confirm-password" required
+										       onchange="validatePassword()" onkeyup="validatePassword()">
+									</label>
+									<br>
+									<br>
+
+									<input type="submit" class="submit" value="Change Password">
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
 
 				<br>
 				<hr>

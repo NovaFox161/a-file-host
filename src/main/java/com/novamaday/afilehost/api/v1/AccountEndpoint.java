@@ -184,4 +184,30 @@ public class AccountEndpoint {
         }
         return response.body();
     }
+
+    public static String changePassword(Request request, Response response) {
+        JSONObject body = new JSONObject(request.body());
+        if (body.has("old") && body.has("new")) {
+            Map<String, Object> map = AccountHandler.getHandler().getAccount(request.session().id());
+            User user = (User) map.get("account");
+
+            if (DatabaseManager.getManager().validLogin(user.getEmail(), body.getString("old"))) {
+
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                String hash = encoder.encode(body.getString("new"));
+
+                DatabaseManager.getManager().updateUser(user, hash);
+
+                response.status(200);
+                response.body("Password successfully changed!");
+            } else {
+                response.status(400);
+                response.body("Invalid Password");
+            }
+        } else {
+            response.status(400);
+            response.body("Invalid Request");
+        }
+        return response.body();
+    }
 }

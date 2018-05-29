@@ -132,7 +132,7 @@ public class DatabaseManager {
 
                 ResultSet res = statement.executeQuery();
 
-                Boolean hasStuff = res.next();
+                boolean hasStuff = res.next();
 
                 if (hasStuff) {
                     User u = new User(UUID.fromString(res.getString("user_id")));
@@ -161,7 +161,7 @@ public class DatabaseManager {
 
                 ResultSet res = statement.executeQuery();
 
-                Boolean hasStuff = res.next();
+                boolean hasStuff = res.next();
 
                 if (hasStuff) {
                     User u = new User(UUID.fromString(res.getString("user_id")));
@@ -190,7 +190,7 @@ public class DatabaseManager {
 
                 ResultSet res = statement.executeQuery();
 
-                Boolean hasStuff = res.next();
+                boolean hasStuff = res.next();
 
                 if (hasStuff) {
                     User u = new User(id);
@@ -245,7 +245,7 @@ public class DatabaseManager {
 
                 ResultSet res = statement.executeQuery();
 
-                Boolean hasStuff = res.next();
+                boolean hasStuff = res.next();
 
                 if (hasStuff) {
                     statement.close();
@@ -270,7 +270,7 @@ public class DatabaseManager {
 
                 ResultSet res = statement.executeQuery();
 
-                Boolean hasStuff = res.next();
+                boolean hasStuff = res.next();
 
                 if (hasStuff) {
                     statement.close();
@@ -295,7 +295,7 @@ public class DatabaseManager {
 
                 ResultSet res = statement.executeQuery();
 
-                Boolean hasStuff = res.next();
+                boolean hasStuff = res.next();
 
                 if (hasStuff) {
                     statement.close();
@@ -318,7 +318,7 @@ public class DatabaseManager {
                 PreparedStatement statement = databaseInfo.getConnection().prepareStatement(query);
                 ResultSet res = statement.executeQuery();
 
-                Boolean hasStuff = res.next();
+                boolean hasStuff = res.next();
 
                 if (!hasStuff || res.getString("user_id") == null) {
                     //Data not present. this should not be possible.
@@ -349,6 +349,47 @@ public class DatabaseManager {
         return false;
     }
 
+    public boolean updateUser(User user, String hash) {
+        try {
+            if (databaseInfo.getMySQL().checkConnection()) {
+                String tableName = String.format("%saccounts", databaseInfo.getPrefix());
+
+                String query = "SELECT * FROM " + tableName + " WHERE user_id = '" + user.getId().toString() + "';";
+                PreparedStatement statement = databaseInfo.getConnection().prepareStatement(query);
+                ResultSet res = statement.executeQuery();
+
+                boolean hasStuff = res.next();
+
+                if (!hasStuff || res.getString("user_id") == null) {
+                    //Data not present. this should not be possible.
+                    statement.close();
+                    return false;
+                } else {
+                    //Data present, update.
+                    String update = "UPDATE " + tableName
+                            + " SET username = ?, email = ?,"
+                            + " email_confirmed = ?, hash = ? WHERE user_id = ?";
+                    PreparedStatement ps = databaseInfo.getConnection().prepareStatement(update);
+
+                    ps.setString(1, user.getUsername());
+                    ps.setString(2, user.getEmail());
+                    ps.setBoolean(3, user.isEmailConfirmed());
+                    ps.setString(4, hash);
+                    ps.setString(5, user.getId().toString());
+
+                    ps.executeUpdate();
+
+                    ps.close();
+                    statement.close();
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger().exception("Failed to update API account", e, this.getClass());
+        }
+        return false;
+    }
+
     public boolean updateApiKey(ApiKey key) {
         try {
             if (databaseInfo.getMySQL().checkConnection()) {
@@ -358,7 +399,7 @@ public class DatabaseManager {
                 PreparedStatement statement = databaseInfo.getConnection().prepareStatement(query);
                 ResultSet res = statement.executeQuery();
 
-                Boolean hasStuff = res.next();
+                boolean hasStuff = res.next();
 
                 if (!hasStuff || res.getString("api_key") == null) {
                     //Data not present, add to DB.
@@ -407,7 +448,7 @@ public class DatabaseManager {
                 PreparedStatement statement = databaseInfo.getConnection().prepareStatement(query);
                 ResultSet res = statement.executeQuery();
 
-                Boolean hasStuff = res.next();
+                boolean hasStuff = res.next();
 
                 if (hasStuff && res.getString("api_key") != null) {
                     ApiKey key = new ApiKey(APIKey);
@@ -455,7 +496,7 @@ public class DatabaseManager {
                 PreparedStatement statement = databaseInfo.getConnection().prepareStatement(query);
                 ResultSet res = statement.executeQuery();
 
-                Boolean hasStuff = res.next();
+                boolean hasStuff = res.next();
 
                 if (hasStuff && res.getString("code") != null) {
                     Confirmation con = new Confirmation();

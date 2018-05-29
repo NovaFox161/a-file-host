@@ -78,6 +78,7 @@ public class SparkUtils {
                 path("/update", () -> {
                     post("/username", AccountEndpoint::changeUsername);
                     post("/email", AccountEndpoint::changeEmail);
+                    post("/password", AccountEndpoint::changePassword);
                 });
             });
         });
