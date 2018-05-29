@@ -717,8 +717,8 @@ button.close {
 
 .modal-content {
     position: relative;
-    background-color: #3c3d41;
-    border: 1px solid #5566c2;
+    background-color: white;
+    border: 1px solid #AF0923;
     border-radius: 6px;
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -749,7 +749,7 @@ button.close {
 
 .modal-header {
     padding: 15px;
-    border-bottom: 1px solid #5566c2;
+    border-bottom: 1px solid #AF0923;
 }
 
 .modal-header .close {
@@ -769,7 +769,7 @@ button.close {
 .modal-footer {
     padding: 15px;
     text-align: right;
-    border-top: 1px solid #5566c2;
+    border-top: 1px solid #AF0923;
 }
 
 .modal-footer .btn + .btn {
