@@ -100,6 +100,13 @@
             <version>5.0.3</version>
             <scope>compile</scope>
         </dependency>
+        <!--ClamAV Client API API-->
+        <dependency>
+            <groupId>xyz.capybara</groupId>
+            <artifactId>clamav-client</artifactId>
+            <version>2.0.2</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

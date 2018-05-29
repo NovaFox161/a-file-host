@@ -6,6 +6,7 @@ import com.novamaday.afilehost.logger.Logger;
 import com.novamaday.afilehost.objects.SiteSettings;
 import com.novamaday.afilehost.utils.EmailHandler;
 import com.novamaday.afilehost.utils.SparkUtils;
+import com.novamaday.afilehost.utils.VirusScanner;
 
 import java.io.File;
 import java.io.FileReader;
@@ -31,5 +32,10 @@ public class Main {
 
         //Init the rest of our services
         EmailHandler.getHandler().init();
+
+        //CLAM NO SCAN IS ONLY ON IN THE DEV/DEBUG STAGE
+        if (!Boolean.valueOf(SiteSettings.CLAM_NO_SCAN.get())) {
+            VirusScanner.init();
+        }
     }
 }
