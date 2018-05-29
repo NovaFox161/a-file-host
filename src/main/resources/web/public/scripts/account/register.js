@@ -1,3 +1,17 @@
+var password = document.getElementById("password");
+var confirm_password = document.getElementById("password-confirm");
+
+function validatePassword() {
+    if (password.value !== confirm_password.value) {
+        confirm_password.setCustomValidity("Passwords Don't Match");
+    } else {
+        confirm_password.setCustomValidity('');
+    }
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+
 function onSubmit() {
     var bodyRaw = {
         "email": document.getElementById("email").value,
@@ -23,12 +37,4 @@ function onSubmit() {
             grecaptcha.reset();
         }
     });
-}
-
-function checkValidity(input) {
-    if (input.value !== document.getElementById("password").value) {
-        input.setCustomValidity("Passwords must match!");
-    } else {
-        input.setCustomValidity("");
-    }
 }
