@@ -37,66 +37,102 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>LATEST</version>
+            <scope>compile</scope>
         </dependency>
         <!--JSON-->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20140107</version>
+            <scope>compile</scope>
         </dependency>
         <!--Spark API-->
         <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
             <version>2.7.1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.21</version>
+            <scope>compile</scope>
         </dependency>
         <!--Thymeleaf-->
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>
             <version>3.0.9.RELEASE</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-java8time</artifactId>
             <version>3.0.1.RELEASE</version>
+            <scope>compile</scope>
         </dependency>
         <!--Spring security-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
             <version>4.2.3.RELEASE</version>
+            <scope>compile</scope>
         </dependency>
         <!--Fix some strange errors-->
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.2</version>
+            <scope>compile</scope>
         </dependency>
         <!--Google ReCAPTCHA Wrapper-->
         <dependency>
             <groupId>de.triology.recaptchav2-java</groupId>
             <artifactId>recaptchav2-java</artifactId>
             <version>1.0.2</version>
+            <scope>compile</scope>
         </dependency>
         <!--Simple Java Mail-->
         <dependency>
             <groupId>org.simplejavamail</groupId>
             <artifactId>simple-java-mail</artifactId>
             <version>5.0.3</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <directory>../target</directory>
+        <finalName>aFileHost</finalName>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>**/src/main/resources/*</include>
+                </includes>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -106,33 +142,15 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!-- Maven Assembly Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.4.1</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
                 <configuration>
-                    <!-- get all project dependencies -->
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.novamaday.afilehost.Main</mainClass>
-                        </manifest>
-                    </archive>
-
+                    <source>8</source>
+                    <target>8</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <!-- bind to the packaging phase -->
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
