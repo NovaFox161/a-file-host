@@ -55,14 +55,15 @@
 					<br>
 					<label>Password (Min. 8 characters)
 						<br>
-						<input type="password" minlength="8" id="password" required>
+						<input type="password" minlength="8" id="password" required oninput="validatePassword()"
+						       onkeyup="validatePassword()">
 					</label>
 					<br>
 					<br>
 					<label>Confirm Password
 						<br>
-						<input type="password" minlength="8" id="password-confirm" oninput="checkValidity(this)"
-						       required>
+						<input type="password" minlength="8" id="password-confirm" oninput="validatePassword()"
+						       onkeyup="validatePassword()" required>
 					</label>
 					<br>
 					<br>
