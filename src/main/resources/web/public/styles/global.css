@@ -167,7 +167,7 @@ hr {
 
 /* The dropdown container */
 .dropdown {
-    float: left;
+    float: right;
     overflow: hidden;
 }
 
@@ -191,19 +191,21 @@ hr {
 .dropdown-content {
     display: none;
     position: absolute;
+    overflow: hidden;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: auto;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
 .dropdown-content a {
-    float: none;
+    float: left;
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    text-align: left;
+    text-align: right;
+    overflow: hidden;
 }
 
 .dropdown-content a:hover {

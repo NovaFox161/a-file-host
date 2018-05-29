@@ -29,9 +29,15 @@
 			<a class="active" href="/contact">Contact</a>
 			<a href="https://www.patreon.com/Novafox">Patreon</a>
 
-			<a class="account" th:if="${loggedIn}" href="/account/logout">Log out</a>
-			<a class="account" th:unless="${loggedIn}" href="/account/register">Register</a>
-			<a class="account" th:unless="${loggedIn}" href="/account/login">Log In</a>
+			<div class="dropdown">
+				<button class="dropbtn">Account</button>
+				<div class="dropdown-content">
+					<a th:if="${loggedIn}" href="/account">Account</a>
+					<a th:if="${loggedIn}" href="/account/logout">Log out</a>
+					<a th:unless="${loggedIn}" href="/account/register">Register</a>
+					<a th:unless="${loggedIn}" href="/account/login">Log In</a>
+				</div>
+			</div>
 		</div>
 
 		<div id="content">

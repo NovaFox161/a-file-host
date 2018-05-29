@@ -103,16 +103,8 @@
     </dependencies>
 
     <build>
+        <directory>target</directory>
         <finalName>aFileHost</finalName>
-        <resources>
-            <resource>
-                <targetPath>.</targetPath>
-                <directory>${project.basedir}</directory>
-                <includes>
-                    <include>**/src/main/resources/*</include>
-                </includes>
-            </resource>
-        </resources>
 
         <plugins>
             <plugin>
