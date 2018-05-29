@@ -89,6 +89,20 @@ public class SparkUtils {
         get("/about", (rq, rs) -> new ModelAndView(AccountHandler.getHandler().getAccount(rq.session().id()), "pages/about"), new ThymeleafTemplateEngine());
         get("/contact", (rq, rs) -> new ModelAndView(AccountHandler.getHandler().getAccount(rq.session().id()), "pages/contact"), new ThymeleafTemplateEngine());
 
+        //Account page pre-processing
+        before("/account/register", (rq, rs) -> {
+            if (AccountHandler.getHandler().hasAccount(rq.session().id())) {
+                //User currently logged in...
+                rs.redirect("/account", 301);
+            }
+        });
+        before("/account/login", (rq, rs) -> {
+            if (AccountHandler.getHandler().hasAccount(rq.session().id())) {
+                //User currently logged in...
+                rs.redirect("/account", 301);
+            }
+        });
+
         //Account pages
         get("/account", (rq, rs) -> new ModelAndView(AccountHandler.getHandler().getAccount(rq.session().id()), "pages/account/account"), new ThymeleafTemplateEngine());
         get("/account/register", (rq, rs) -> new ModelAndView(AccountHandler.getHandler().getAccount(rq.session().id()), "pages/account/register"), new ThymeleafTemplateEngine());
