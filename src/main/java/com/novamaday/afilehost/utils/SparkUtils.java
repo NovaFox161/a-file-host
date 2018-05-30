@@ -80,6 +80,11 @@ public class SparkUtils {
                     post("/email", AccountEndpoint::changeEmail);
                     post("/password", AccountEndpoint::changePassword);
                 });
+                path("/key", () -> {
+                    post("/create", AccountEndpoint::createNewAPIKey);
+                    post("/delete", AccountEndpoint::deleteAPIKey);
+                    post("/get-all", AccountEndpoint::getAllAPIKeys);
+                });
             });
         });
 

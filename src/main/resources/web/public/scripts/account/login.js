@@ -2,7 +2,6 @@ function onSubmit() {
     var bodyRaw = {
         "email": document.getElementById("email").value,
         "password": document.getElementById("password").value,
-        "gcap": grecaptcha.getResponse()
     };
 
     $.ajax({
@@ -19,7 +18,6 @@ function onSubmit() {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showSnackbar(jqXHR.responseText);
-            grecaptcha.reset();
         }
     });
 }

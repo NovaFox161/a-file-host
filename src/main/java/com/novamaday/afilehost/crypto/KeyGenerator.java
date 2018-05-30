@@ -38,4 +38,19 @@ public class KeyGenerator {
         }
         return new String(buff);
     }
+
+    public static String generateAPIKey() {
+        SecureRandom secRand = new SecureRandom();
+        Random rand = new Random();
+        char[] buff = new char[32];
+
+        for (int i = 0; i < 32; ++i) {
+            // reseed rand once you've used up all available entropy bits
+            if ((i % 10) == 0) {
+                rand.setSeed(secRand.nextLong()); // 64 bits of random!
+            }
+            buff[i] = VALID_CHARACTERS_2[rand.nextInt(VALID_CHARACTERS_2.length)];
+        }
+        return new String(buff);
+    }
 }

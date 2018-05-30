@@ -10,15 +10,17 @@ body {
     background: linear-gradient(to bottom right, #22a8e2 0%, #22e24b 100%) no-repeat fixed;
 
     min-height: 100%;
-    margin: 0 0 25px; /* bottom = footer height */
+    margin: 0; /* bottom = footer height */
 
     overflow-x: hidden;
 }
 
+
 footer {
-    position: absolute;
-    bottom: 0;
-    height: 25px;
+    height: 50px;
+    color: white;
+    background: #AF0923;
+    text-align: center;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -91,7 +93,7 @@ hr {
 #content {
     margin-left: 20%;
     margin-right: 20%;
-    margin-bottom: auto;
+    min-height: calc(100vh - 70px);
     background-color: white;
 
     padding: 10px;

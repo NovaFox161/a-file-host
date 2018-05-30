@@ -8,6 +8,8 @@ import com.novamaday.afilehost.objects.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @SuppressWarnings({"SqlResolve", "UnusedReturnValue", "SqlNoDataSourceInspection"})
@@ -469,6 +471,49 @@ public class DatabaseManager {
             Logger.getLogger().exception("Failed to get API Key.", e, this.getClass());
         }
         return null;
+    }
+
+    public List<ApiKey> getAllAPIKeys(User user) {
+        List<ApiKey> keys = new ArrayList<>();
+
+        try {
+            if (databaseInfo.getMySQL().checkConnection()) {
+                String dataTableName = String.format("%sapi", databaseInfo.getPrefix());
+
+                String query = "SELECT * FROM " + dataTableName + " WHERE user_id = '" + user.getId() + "';";
+                PreparedStatement statement = databaseInfo.getConnection().prepareStatement(query);
+                ResultSet res = statement.executeQuery();
+
+                while (res.next()) {
+                    ApiKey key = new ApiKey(res.getString("api_key"));
+                    key.setUserId(user.getId());
+                    key.setTimeIssued(res.getLong("time_issued"));
+                    key.setUses(res.getInt("uses"));
+
+                    keys.add(key);
+                }
+                statement.close();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger().exception("Failed to get all API Keys for user.", e, this.getClass());
+        }
+        return keys;
+    }
+
+    public void deleteAPIKey(ApiKey key) {
+        try {
+            if (databaseInfo.getMySQL().checkConnection()) {
+                String dataTableName = String.format("%sapi", databaseInfo.getPrefix());
+
+                String query = "DELETE FROM " + dataTableName + " WHERE api_key = '" + key.getKey() + "';";
+                PreparedStatement statement = databaseInfo.getConnection().prepareStatement(query);
+                statement.execute();
+
+                statement.close();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger().exception("Failed to delete API Key.", e, this.getClass());
+        }
     }
 
     public void addPendingConfirmation(User user, String code) {

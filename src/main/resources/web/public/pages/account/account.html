@@ -24,7 +24,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 
-	<body>
+	<body onload="getAPIKeys()">
 		<div class="top-nav">
 			<a href="/">Home</a>
 			<a href="/contact">Contact</a>
@@ -176,14 +176,28 @@
 
 				<div id="keys">
 					<h2>API Keys</h2>
+					<button onclick="createAPIKey()">Create New API Key</button>
+					<br>
+					<table id="key-table" style="border-color: #ef0813; margin: auto;" border="#ef0813" cellpadding="4"
+					       cellspacing="0">
+						<tbody id="key-table-body">
+						<tr style="height: 50px;">
+							<th>Key</th>
+							<th>Uses</th>
+							<th>Delete</th>
+						</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
-		</div>
-		<div th:unless="${loggedIn}">
-			<h1>Please login to continue</h1>
+
+			<div th:unless="${loggedIn}">
+				<h1>Please login to continue</h1>
+			</div>
 		</div>
 
 		<div id="snackbar"></div>
+
 	</body>
 
 	<footer id="footer">
