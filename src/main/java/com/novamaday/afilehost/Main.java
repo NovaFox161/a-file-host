@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class Main {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void main(String args[]) throws IOException {
         //Load settings
         Properties p = new Properties();
@@ -37,5 +38,9 @@ public class Main {
         if (!Boolean.valueOf(SiteSettings.CLAM_NO_SCAN.get())) {
             VirusScanner.init();
         }
+
+        //Create upload + tmp folders...
+        new File(SiteSettings.UPLOAD_FOLDER.get()).mkdir();
+        new File(SiteSettings.TMP_FOLDER.get()).mkdir();
     }
 }

@@ -3,6 +3,7 @@ package com.novamaday.afilehost.utils;
 import com.novamaday.afilehost.account.AccountHandler;
 import com.novamaday.afilehost.api.v1.AccountEndpoint;
 import com.novamaday.afilehost.api.v1.ContactEndpoint;
+import com.novamaday.afilehost.api.v1.UploadEndpoint;
 import com.novamaday.afilehost.database.DatabaseManager;
 import com.novamaday.afilehost.logger.Logger;
 import com.novamaday.afilehost.objects.ApiKey;
@@ -62,7 +63,7 @@ public class SparkUtils {
                 }
             }
             //Only accept json because its easier to parse and handle.
-            if (!request.contentType().equalsIgnoreCase("application/json")) {
+            if (!request.contentType().equalsIgnoreCase("application/json") && !request.contentType().equalsIgnoreCase("multipart/form-data")) {
                 halt(400, "Bad Request");
             }
         });
@@ -85,6 +86,10 @@ public class SparkUtils {
                     post("/delete", AccountEndpoint::deleteAPIKey);
                     post("/get-all", AccountEndpoint::getAllAPIKeys);
                 });
+            });
+
+            path("/upload", () -> {
+                post("/simple", UploadEndpoint::simpleUpload);
             });
         });
 

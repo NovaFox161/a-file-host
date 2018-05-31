@@ -3,10 +3,7 @@ package com.novamaday.afilehost.logger;
 import com.novamaday.afilehost.objects.SiteSettings;
 
 import javax.annotation.Nullable;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -29,6 +26,9 @@ public class Logger {
     }
 
     public void init() {
+        //noinspection ResultOfMethodCallIgnored
+        new File(SiteSettings.LOG_FOLDER.get()).mkdir();
+
         //Create files...
         String timestamp = new SimpleDateFormat("dd-MM-yyyy-hh.mm.ss").format(System.currentTimeMillis());
 
